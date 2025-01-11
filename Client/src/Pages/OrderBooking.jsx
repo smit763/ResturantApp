@@ -157,6 +157,8 @@ const OrderBooking = () => {
       <div className="bg-gray-800 text-white p-6 rounded-lg shadow-md">
         <h3 className="text-lg font-semibold text-red-600">Your Order:</h3>
 
+        {console.log(orderDetail)}
+
         {orderDetail ? (
           <div>
             <div className="mt-6 bg-gray-700 p-4 rounded-lg">
@@ -186,12 +188,14 @@ const OrderBooking = () => {
                 </p>
               </div>
             </div>
-            <Button
-              onClick={handleSubmitOrder}
-              className="mt-6 bg-green-500 w-full py-2 rounded-lg text-white hover:bg-green-600"
-            >
-              Add Order
-            </Button>
+            {!orderDetail?.data?.[0]?.completedAt && (
+              <Button
+                onClick={handleSubmitOrder}
+                className="mt-6 bg-green-500 w-full py-2 rounded-lg text-white hover:bg-green-600"
+              >
+                Add Order
+              </Button>
+            )}
 
             <div className="mt-4">
               <h4 className="text-lg font-semibold">Payment Method</h4>
@@ -217,12 +221,20 @@ const OrderBooking = () => {
               </label>
             </div>
 
-            <Button
-              onClick={handleCheckout}
-              className="mt-4 bg-blue-500 w-full py-2 rounded-lg text-white hover:bg-blue-600"
-            >
-              Checkout
-            </Button>
+            {!orderDetail?.data?.[0]?.completedAt ? (
+              <Button
+                onClick={handleCheckout}
+                className="mt-4 bg-blue-500 w-full py-2 rounded-lg text-white hover:bg-blue-600"
+              >
+                Checkout
+              </Button>
+            ) : (
+              <Button
+                className="mt-4 !bg-green-500 w-full py-2 rounded-lg text-white hover:bg-blue-600"
+              >
+                Payment Completed
+              </Button>
+            )}
           </div>
         ) : (
           <div>
